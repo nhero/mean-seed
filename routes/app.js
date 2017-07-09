@@ -3,15 +3,20 @@ var router = express.Router();
 var User = require('../models/user');
 
 router.get('/', function (req, res, next) {
-    res.render('node');
+    User.findOne({}, function(err, doc) {
+        if (err) {
+            return res.send('Error!');
+        }
+        res.render('node', {email: doc.email});
+    });
 });
 
 router.post('/message', function (req, res, next) {
     var email = req.body.email;
     var user = new User({
-      firstName: 'Nate',
-      lastName: 'Hero',
-      password: 'asdf1234',
+      firstName: 'Test',
+      lastName: 'User',
+      password: 'test1234',
       email: email,
     });
     user.save();
